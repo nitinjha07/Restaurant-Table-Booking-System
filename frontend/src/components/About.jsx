@@ -2,8 +2,6 @@ import React from 'react'
 import aboutSectionImg from '../../public/assets/aboutSectionImg.jpg'
 import data from '../data.json'
 
-const PUBLIC_URL = '../../public'
-
 const About = () => {
   return (
     <div className='w-[100%] mx-auto flex flex-col gap-10 pt-5 pb-10' id='about'>
@@ -27,7 +25,7 @@ const About = () => {
         <div className='flex flex-wrap justify-evenly'>
             {data.highlights.map((highlight) => (
               <div key={highlight.id} className='flex flex-col justify-center items-center w-[20%] h-[20rem] p-4 rounded-lg cursor-default card '>
-                <img src={PUBLIC_URL + highlight.image} alt={highlight.title} className='w-20 mb-4' />
+                <img src={highlight.image} alt={highlight.title} className='w-20 mb-4' />
                 <p className='font-semibold text-lg mb-2 text-center h-12'>{highlight.title}</p>
                 <p className='text-center'>{highlight.description}</p>
               </div>
