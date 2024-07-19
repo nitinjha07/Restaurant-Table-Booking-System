@@ -1,9 +1,8 @@
 import React from 'react'
 import data from '../data.json'
-import bk from '../../public/assets/popular_dishes_bk.svg'
 import NeonGradientCard from '../components/ui/NeonGradientCard'
 
-const PUBLIC_URL = "../../public"
+// const PUBLIC_URL = "../../public"
 
 const PopularDishes = () => {
   return (
@@ -21,7 +20,7 @@ const PopularDishes = () => {
                                         <div className='w-[95%] h-[24rem] '>
                                         <NeonGradientCard className="items-center justify-center text-center ">
                                             <img
-                                                src={PUBLIC_URL + item.image}
+                                                src={item.image}
                                                 alt={item.name}
                                                 className='w-full h-full object-cover rounded-2xl overflow-hidden hover:cursor-pointer'
                                             />
