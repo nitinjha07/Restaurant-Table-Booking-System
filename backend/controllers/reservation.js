@@ -29,6 +29,7 @@ const getReservation = async(req, res) => {
         })
     }
     catch(err){
+        console.error("Error fetching reservations: ", err.message);
         res.status(500).json({
             success: false,
             message: "Cannot get reservation data"
