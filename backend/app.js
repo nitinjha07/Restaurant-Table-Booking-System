@@ -6,7 +6,7 @@ const errorMiddleware = require("./error/error")
 const reservationRouter = require('./routes/reservationRoute')
 
 const app = express();
-dotenv.config({path: './config/.env'});
+dotenv.config();
 
 app.use(cors({
     origin: process.env.CLIENT_URL,
