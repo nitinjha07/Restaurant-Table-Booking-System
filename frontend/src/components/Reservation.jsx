@@ -24,7 +24,7 @@ const Reservation = () => {
     e.preventDefault();
 
     try{
-      const response = await axios.post('http://localhost:5000/reservation/send', formData);
+      const response = await axios.post('${process.env.REACT_APP_BACKEND_URL}/reservation/send', formData);
       console.log(response.data);
     }
     catch(error){
