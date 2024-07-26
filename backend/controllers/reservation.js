@@ -20,4 +20,20 @@ const sendReservation = async(req, res, next) => {
     }
 }
 
-module.exports = sendReservation;
+const getReservation = async(req, res) => {
+    try{
+        const data = await reservation.find({});
+        res.status(200).json({
+            success: true,
+            data: data,
+        })
+    }
+    catch(err){
+        res.status(500).json({
+            success: false,
+            message: "Cannot get reservation data"
+        })
+    }
+}
+
+module.exports = {sendReservation, getReservation};
