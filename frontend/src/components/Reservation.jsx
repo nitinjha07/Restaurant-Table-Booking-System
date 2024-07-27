@@ -23,8 +23,9 @@ const Reservation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const url = "https://restaurant-table-booking-system.onrender.com";
     try{
-      const response = await axios.post('http://localhost:5000/reservation/send', formData);
+      const response = await axios.post(`${url}/reservation/send`, formData);
       console.log(response.data);
     }
     catch(error){
