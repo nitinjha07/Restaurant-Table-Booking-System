@@ -20,9 +20,6 @@ const Navbar = () => {
               <li className='cursor-pointer hover:text-blue-600 duration-200'>
                 <Link to='popularDishes' smooth={true} duration={500} >Popular Dishes</Link>
               </li>
-              {/* <li className='cursor-pointer'>
-                <Link to='gallery' smooth={true} duration={500} >Gallery</Link>
-              </li> */}
               <li className='cursor-pointer hover:text-blue-600 duration-200'>
                 <Link to='reservation' smooth={true} duration={500} >Reservation</Link>
               </li>

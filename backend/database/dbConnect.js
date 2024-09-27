@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const dbConnection = () => {
-    mongoose.connect(process.env.DB_URL, {
-        dbName: "RESTAURANT",
-        family: 4
-    })
+const dbConnection = async () => {
+    await mongoose.connect(process.env.DB_URL)
     .then(() => {
         console.log("Database connected successfully");
     })

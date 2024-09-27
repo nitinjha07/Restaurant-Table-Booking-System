@@ -7,7 +7,7 @@ const Contact = () => {
     const footer = data.footer;
 
   return (
-    <footer className="bg-gray-900 text-white py-8 px-5">
+    <footer className="bg-gray-900 text-white py-8 px-5" id="contact">
       <div className="container mx-auto flex flex-wrap justify-between items-center px-4">
         <div className="w-full md:w-1/3 mb-4 md:mb-0">
           <h2 className="text-2xl font-bold mb-2">Contact Us</h2>

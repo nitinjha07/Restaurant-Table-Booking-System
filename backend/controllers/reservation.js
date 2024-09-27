@@ -23,6 +23,7 @@ const sendReservation = async(req, res, next) => {
 const getReservation = async(req, res) => {
     try{
         const data = await reservation.find({});
+        console.log("Fetched Reservations: ", data);
         res.status(200).json({
             success: true,
             data: data,

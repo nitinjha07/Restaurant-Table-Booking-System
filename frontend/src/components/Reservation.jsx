@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import reservationbk from '../../public/assets/reservationbk.png'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Reservation = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -20,22 +24,49 @@ const Reservation = () => {
     });
   };
 
+  const formValidation = () => {
+    const { firstName, lastName, email, date, time, phone } = formData;
+    if (!firstName || !lastName || !email || !date || !time || !phone) {
+      toast('Please fill in all fields', { type: 'error', position: 'top-center', theme: 'colored' });
+      return false;
+    }
+
+    if(!email.includes('@') || !email.includes('.')){
+      toast('Please enter a valid email', { type: 'error', position: 'top-center', theme: 'colored' });
+      return false;
+    }
+
+    if(phone.length !== 10){
+      toast('Please enter a valid phone number', { type: 'error', position: 'top-center', theme: 'colored' });
+      return false;
+    }
+    return true;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!formValidation()){
+      return;
+    }
 
     const url = "https://restaurant-table-booking-system.onrender.com";
     try{
       const response = await axios.post(`${url}/reservation/send`, formData);
       console.log(response.data);
+      navigate('/success');
     }
     catch(error){
-
-      console.log(error)
+      console.log(error);
+      toast("Something went wrong, please try again later", {
+        type: "error",
+        position: "top-center",
+        theme: "colored",
+      });
     }
   };
 
   return (
-    <div className="mx-auto bg-cover bg-no-repeat bg-center w-full h-full " id='reservation'>
+    <div className="mx-auto bg-cover bg-no-repeat bg-center w-full h-screen " id='reservation'>
       <h2 className="text-center text-4xl font-bold uppercase mt-10">BOOK A TABLE</h2>
       <div className='flex justify-evenly items-center flex-wrap'>
         <form onSubmit={handleSubmit} className='p-8 border-2 border-black w-[30%]'>
