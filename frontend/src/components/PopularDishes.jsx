@@ -1,44 +1,57 @@
-import React from 'react'
-import data from '../data.json'
-import NeonGradientCard from '../components/ui/NeonGradientCard'
-
-// const PUBLIC_URL = "../../public"
+import React from "react";
+import data from "../data.json";
+import { motion } from "framer-motion";
 
 const PopularDishes = () => {
   return (
-    <div className='w-[100%] mx-auto text-white pt-10 bg-slate-900' id='popularDishes' >
-        <h1 className='text-center text-4xl font-bold uppercase '>Hot Picks</h1>
-        <div className='flex flex-wrap justify-between p-10 gap-6'>
-            {
-                data.hotPicks.sections.map((section) => (
-                    <div className='w-[49%] flex flex-col items-center justify-between gap-4  p-4 mx-auto'>
-                        <p className='font-semibold text-2xl uppercase'>{section.name}</p>
-                        <div className='flex justify-between w-[100%]'>
-                            {
-                                section.items.map((item) => (
-                                    <div className='flex flex-col items-center w-[50%] h-[26rem] '>
-                                        <div className='w-[95%] h-[24rem] '>
-                                        <NeonGradientCard className="items-center justify-center text-center ">
-                                            <img
-                                                src={item.image}
-                                                alt={item.name}
-                                                className='w-full h-full object-cover rounded-2xl overflow-hidden hover:cursor-pointer'
-                                            />
-                                        </NeonGradientCard>
+    <div className="w-full bg-secondary py-20" id="popularDishes">
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="section-title text-white"
+      >
+        Hot Picks
+      </motion.h2>
 
-
-                                        </div>
-                                        <p className='text-lg uppercase font-semibold text-center'>{item.name}</p>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                ))
-            }
-        </div>
+      <div className="w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {data.hotPicks.sections.map((section, sectionIdx) => (
+          <motion.div
+            key={sectionIdx}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: sectionIdx * 0.2 }}
+            className="space-y-8"
+          >
+            <h3 className="text-3xl font-serif text-center text-white">
+              {section.name}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {section.items.map((item, itemIdx) => (
+                <motion.div
+                  key={itemIdx}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                  className="glass-card overflow-hidden"
+                >
+                  <div className="relative h-[300px] overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  </div>
+                  <h4 className="text-xl font-serif text-white text-center py-4">
+                    {item.name}
+                  </h4>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default PopularDishes
+export default PopularDishes;

@@ -1,61 +1,74 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import reservationbk from '../../public/assets/reservationbk.png'
+import reservationbk from '/assets/reservationbk.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
+import { Calendar, Clock, Mail, Phone, User } from 'lucide-react';
 
 const Reservation = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    date: '',
-    time: '',
-    phone: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    date: "",
+    time: "",
+    phone: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const formValidation = () => {
     const { firstName, lastName, email, date, time, phone } = formData;
     if (!firstName || !lastName || !email || !date || !time || !phone) {
-      toast('Please fill in all fields', { type: 'error', position: 'top-center', theme: 'colored' });
+      toast("Please fill in all fields", {
+        type: "error",
+        position: "top-center",
+        theme: "colored",
+      });
       return false;
     }
 
-    if(!email.includes('@') || !email.includes('.')){
-      toast('Please enter a valid email', { type: 'error', position: 'top-center', theme: 'colored' });
+    if (!email.includes("@") || !email.includes(".")) {
+      toast("Please enter a valid email", {
+        type: "error",
+        position: "top-center",
+        theme: "colored",
+      });
       return false;
     }
 
-    if(phone.length !== 10){
-      toast('Please enter a valid phone number', { type: 'error', position: 'top-center', theme: 'colored' });
+    if (phone.length !== 10) {
+      toast("Please enter a valid phone number", {
+        type: "error",
+        position: "top-center",
+        theme: "colored",
+      });
       return false;
     }
     return true;
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!formValidation()){
+    if (!formValidation()) {
       return;
     }
 
-    const url = "https://restaurant-table-booking-system.onrender.com";
-    try{
+    const url = import.meta.env.VITE_SERVER_URL;
+    try {
       const response = await axios.post(`${url}/reservation/send`, formData);
       console.log(response.data);
-      navigate('/success');
-    }
-    catch(error){
+      navigate("/success");
+    } catch (error) {
       console.log(error);
       toast("Something went wrong, please try again later", {
         type: "error",
@@ -66,96 +79,140 @@ const Reservation = () => {
   };
 
   return (
-    <div className="mx-auto bg-cover bg-no-repeat bg-center w-full h-screen " id='reservation'>
-      <h2 className="text-center text-4xl font-bold uppercase mt-10">BOOK A TABLE</h2>
-      <div className='flex justify-evenly items-center flex-wrap'>
-        <form onSubmit={handleSubmit} className='p-8 border-2 border-black w-[30%]'>
-          <div className='flex justify-between '>
-            <div className="mb-4 w-[45%]">
-              <label className="block ">First Name</label>
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border-2 border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                autoComplete= "off"
-              />
+    <div className="w-full min-h-screen bg-accent py-20" id='reservation'>
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="section-title"
+      >
+        Book a Table
+      </motion.h2>
+
+      <div className='w-[90%] mx-auto flex flex-col lg:flex-row items-center justify-between gap-12'>
+        <motion.form
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          onSubmit={handleSubmit}
+          className='w-full lg:w-1/2 glass-card p-8 space-y-6'
+        >
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium">First Name</label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  autoComplete="off"
+                />
+              </div>
             </div>
-            <div className="mb-4  w-[45%]">
-              <label className="block ">Last Name</label>
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                className="w-full px-4 py-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-2 border-black"
-                autoComplete= "off"
-              />
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium">Last Name</label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  autoComplete="off"
+                />
+              </div>
             </div>
           </div>
 
-          <div>
-            <div className="mb-4">
-              <label className="block ">Date</label>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Date</label>
+            <div className="relative">
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
               <input
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-2 border-black"
-                autoComplete= "off"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                autoComplete="off"
               />
             </div>
-            <div className="mb-4">
-              <label className="block ">Time</label>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Time</label>
+            <div className="relative">
+              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
               <input
                 type="time"
                 name="time"
                 value={formData.time}
                 onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-2 border-black"
-                autoComplete= "off"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                autoComplete="off"
               />
             </div>
           </div>
 
-          <div>
-            <div className="mb-4">
-              <label className="block ">Email</label>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Email</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-2 border-black"
-                autoComplete= "off"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                autoComplete="off"
               />
             </div>
-            <div className="mb-4">
-              <label className="block">Phone Number</label>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">Phone Number</label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border-2 border-black"
-                autoComplete= "off"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                autoComplete="off"
               />
             </div>
           </div>
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 uppercase"
+            className="shadow__btn w-full"
           >
             Request a table
           </button>
-          <p className='text-sm mt-2'>*Please submit your reservation details and we will contact you to confirm your booking</p>
-        </form>
+          <p className='text-sm text-gray-600 text-center'>
+            *Please submit your reservation details and we will contact you to confirm your booking
+          </p>
+        </motion.form>
 
-        <img src={reservationbk} alt="Reservation background" className=' w-[40%]' />
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className='w-full lg:w-1/2'
+        >
+          <img
+            src={reservationbk}
+            alt="Reservation background"
+            className='w-full h-[600px] object-cover rounded-2xl shadow-2xl'
+          />
+        </motion.div>
       </div>
-
     </div>
   );
 };
